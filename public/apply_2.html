@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply — HireNeighborly</title>
+<meta name="description" content="Tell us about your neighborhood. We read every application and answer either way.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/_style.css">
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="/"><span class="mark">&#8962;</span>Hire<i>Neighborly</i></a>
+  <ul>
+    <li><a class="l" href="/">Home</a></li>
+    <li><a class="l" href="/how-it-works">How it works</a></li>
+    <li><a class="l" href="/the-model">The model</a></li>
+    <li><a class="l" href="/apply" aria-current="page">Apply</a></li>
+  </ul>
+</div></nav>
+
+<header><div class="wrap">
+  <span class="eyebrow">Apply</span>
+  <h1>Start one where you live.</h1>
+  <p class="lede">There is no cost to apply and no obligation either way. We read every one of
+  these and answer, usually within a few days. If it is a fit, the next step is a conversation
+  with both of us.</p>
+</div></header>
+
+<section><div class="wrap">
+  <div class="formwrap">
+    <form id="f" novalidate>
+      <div class="fld">
+        <label for="n">Your name</label>
+        <input id="n" name="n" type="text" autocomplete="name" required>
+      </div>
+      <div class="fld">
+        <label for="e">Email</label>
+        <input id="e" name="e" type="email" autocomplete="email" required>
+      </div>
+      <div class="fld">
+        <label for="hood">Your neighborhood, and the town it is in</label>
+        <input id="hood" name="hood" type="text" placeholder="Lakewood, Lee's Summit MO">
+      </div>
+      <div class="fld">
+        <label for="homes">Roughly how many homes</label>
+        <input id="homes" name="homes" type="text" placeholder="A guess is fine">
+      </div>
+      <div class="fld">
+        <label for="you">How do people there already know you</label>
+        <textarea id="you" name="you" placeholder="I run the Facebook group. I sell here. I have lived here since 2011."></textarea>
+      </div>
+      <div class="fld">
+        <label for="ten">Name a few businesses owned by somebody in your neighborhood</label>
+        <textarea id="ten" name="ten" placeholder="Off the top of your head. This is the question that tells us the most."></textarea>
+      </div>
+      <div class="hp" aria-hidden="true">
+        <label for="website">Leave this blank</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <button class="btn lg" type="submit" id="sb" style="width:100%">Send my application</button>
+      <p id="msg" style="margin:14px 0 0;font-size:15px"></p>
+    </form>
+  </div>
+  <p style="font-size:14.5px;color:var(--mute);margin-top:16px">Or just email
+    <a href="mailto:davie.holt@gmail.com">davie.holt@gmail.com</a>.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What we are actually looking for</h2>
+  <div class="grid">
+    <div class="card"><div class="k">Required</div><h3>You live there</h3>
+      <p>And plan to keep living there. Everything rests on this one.</p></div>
+    <div class="card"><div class="k">The real test</div><h3>You can name them</h3>
+      <p>Businesses owned by your neighbors, off the top of your head, right now. It cannot
+      be faked or prepared for.</p></div>
+    <div class="card"><div class="k">Matters</div><h3>Your day job runs on being known</h3>
+      <p>Agent, contractor, insurance, advisor. The share should be on top of something, not
+      instead of it.</p></div>
+    <div class="card"><div class="k">Honest</div><h3>We do not take everybody</h3>
+      <p>One partner per neighborhood, and we would rather say no than run a page nobody
+      tends.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fmark">HireNeighborly</div>
+  <p>Neighbors, not vendors.</p>
+  <p>Live now in Lakewood, Lee's Summit, Missouri.
+    <a href="https://lakewoodneighbors.com" target="_blank" rel="noopener">lakewoodneighbors.com</a></p>
+  <nav><a href="/">Home</a><a href="/how-it-works">How it works</a><a href="/the-model">The model</a></nav>
+</div></footer>
+
+<script>
+(function(){
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbyazfGjrUlFR3kB0KPhzKz7AmOUDtOR6TrZUp_YYgJ1SOow5WWUyoVDRTJ6xBLpxUirbg/exec";
+  var f = document.getElementById('f'), msg = document.getElementById('msg'),
+      sb = document.getElementById('sb');
+  function v(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
+  function mailto(){
+    var hood = v('hood') || 'my neighborhood';
+    var body = ['Name: '+v('n'), 'Email: '+v('e'), 'Neighborhood: '+v('hood'),
+      'Roughly how many homes: '+v('homes'), '', 'How people there already know me:', v('you'),
+      '', 'Businesses owned by neighbors I can name:', v('ten'), '',
+      '(Sent from hireneighborly.com)'].join('\n');
+    window.location.href = 'mailto:davie.holt@gmail.com'
+      + '?subject=' + encodeURIComponent('Community Partner application: ' + hood)
+      + '&body=' + encodeURIComponent(body);
+  }
+  f.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if(!v('n') || !v('e')){ msg.style.color='#a83c26'; msg.textContent='Name and email, at least.'; return; }
+    if(!ENDPOINT){ mailto(); return; }
+    sb.disabled = true; sb.textContent = 'Sending...';
+    var p = {n:v('n'), e:v('e'), hood:v('hood'), homes:v('homes'), you:v('you'),
+             ten:v('ten'), website:v('website')};
+    fetch(ENDPOINT, {method:'POST', body: JSON.stringify(p)})
+      .then(function(){ done(); })
+      .catch(function(){ done(); });
+    setTimeout(done, 6000);
+    var fired = false;
+    function done(){
+      if(fired) return; fired = true;
+      f.style.display = 'none';
+      msg.style.color = 'var(--good)';
+      msg.innerHTML = '<strong>Got it. Thank you.</strong><br>We read every one of these and '
+        + 'will get back to you either way, usually within a few days.';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
